@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorator="layout/headerfooter">
 <head>
-    <title>Login</title>
+    <title>Countries</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -12,8 +12,43 @@
 <body>
 
 <div class="container" layout:fragment="content">
-    <h1>Welcome Home</h1>
-</div>
+    <div class="row">
+        <!--Table-->
+        <div class="table-responsive col-md-4">
+            <table class="table table-bordered table-hover" style="background-color: lightgoldenrodyellow;">
+                <thead>
+                <tr>
+                    <!--<th class="col-lg-5 text-center">SL No</th>-->
+                    <th class="col-md-4 col-sm-4 col-xs-4 text-center">SL No</th>
+                    <th class="col-md-6 col-sm-6 col-xs-4 text-center ">Country</th>
+                    <th class="col-md-2 col-sm-2 col-xs-4 text-center" colspan="2">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-left" th:each="country,iterator : ${countries}">
+                    <td th:hidden="${country.countryId}" th:name="countryId"></td>
+                    <!--<td th:text="${iterator.index+1}"></td>-->
+                    <td th:text="${(iterator.index + 1)}"  th:value="${(iterator.index + 1)}"></td>
+                    <td th:text="${country.countryName}" th:name="countryName" th:value="${country.countryName}"></td>
+                    <td class="text-center">
+                        <a th:href="@{/editCountry(countryId=${country.countryId})}">
+                            <button id="editButton" class="glyphicon glyphicon-pencil"></button>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a th:href="@{/deleteCountry(countryId=${country.countryId})}">
+                            <button id="deleteButton" class="glyphicon glyphicon-trash"></button>
+                        </a>
+                    </td>
 
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="border: 1px solid black" class="col-md-8">
+            Hello
+        </div>
+    </div>
+</div>
 </body>
 </html>
