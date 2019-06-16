@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -16,19 +17,7 @@ import java.util.List;
 public class CountryController {
     @Autowired
     CountryService countryService;
-
-    @RequestMapping(value = "/addCountry", method = RequestMethod.GET)
-    public String showAddCountryPage() {
-        return "addCountry";
-    }
-
-    @RequestMapping(value = "/addCountry", method = RequestMethod.POST)
-    public String addCountry(@ModelAttribute("countryName") String countryName) {
-        Country country = new Country(countryName);
-        countryService.saveCountry(country);
-        return "home";
-    }
-
+//  Pulling all county data from database and showing it in homepage
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView showCountryList() {
         List<Country> countries = new ArrayList<>();
@@ -39,6 +28,23 @@ public class CountryController {
         return modelAndView;
     }
 
+//    Showing page for adding county to database
+    @RequestMapping(value = "/addCountry", method = RequestMethod.GET)
+    public String showAddCountryPage() {
+        return "addCountry";
+    }
+
+//    Saving Country to database
+    @RequestMapping(value = "/addCountry", method = RequestMethod.POST)
+    public ModelAndView addCountry(@ModelAttribute("countryName") String countryName) {
+        ModelAndView modelAndView = new ModelAndView();
+        Country country = new Country(countryName);
+        countryService.saveCountry(country);
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
+    }
+
+//    Showing page for updating country info
     @RequestMapping(value = "/updateCountry", method = RequestMethod.GET)
     public ModelAndView showUpdateCountryPage(@ModelAttribute("countryId") Long countryId) {
         ModelAndView modelAndView = new ModelAndView();
@@ -48,12 +54,23 @@ public class CountryController {
         return modelAndView;
     }
 
+//    updating country data in database and then redirecting to homepage
     @RequestMapping(value = "/updateCountry", method = RequestMethod.POST)
     public ModelAndView updateCountry(@ModelAttribute Country country) {
         ModelAndView modelAndView = new ModelAndView();
         Country tempCountry = countryService.getCountryById(country.getCountryId());
         tempCountry.setCountryName(country.getCountryName());
         countryService.updateCountry(tempCountry);
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
+    }
+
+//    Deleting country by country Id and then redirecting to homepage
+    @RequestMapping(value = "/deleteCountry", method = RequestMethod.GET)
+    public ModelAndView deleteCountry(@ModelAttribute("countryId") Long countryId) {
+        ModelAndView modelAndView = new ModelAndView();
+        Country country = countryService.getCountryById(countryId);
+        countryService.deleteCountry(country);
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
