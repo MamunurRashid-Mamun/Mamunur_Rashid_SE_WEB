@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/headerfooter">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <form th:action="@{/registerTeamMember}" method="post" th:object="${teamMember}">
+
+            <!-- Text input-->
+            <div class="form-group col-md-4 col-md-offset-4">
+                <label>Name:</label>
+                <input th:id="name" th:name="username" class="form-control" type="text"
+                       th:field="*{name}"
+                       placeholder="User Name"
+                       style="margin-top: 0px;" required="required"/>
+            </div>
+            <div class="form-group col-md-4 col-md-offset-4">
+                <label for="country">Country:</label>
+                <select id="country" name="countryId" class="form-control" required>
+                    <option value="">Select one...</option>
+                    <option th:each="country,iterator : ${countries}" th:text="${country.countryName}" th:value="${country.countryId}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-4 col-md-offset-4">
+                <label>Date of Birth:</label>
+                <input th:id="dateOfBirth" th:name="dateOfBirth" class="form-control" type="text"
+                       placeholder="ex: 01/01/1996"
+                       th:field="*{dateOfBirth}"
+                       style="margin-top: 0px;" required="required"/>
+            </div>
+            <div class="form-group col-md-4 col-md-offset-4">
+                <label>Age:</label>
+                <input th:id="age" th:name="age" class="form-control" type="number"
+                       placeholder="Age"
+                       th:field="*{age}"
+                       style="margin-top: 0px;" required="required"/>
+            </div>
+            <div class="form-group col-md-4 col-md-offset-4">
+                <label>Role:</label>
+                <input th:id="role" th:name="role" class="form-control" type="text"
+                       placeholder="Player/Coach"
+                       th:field="*{role}"
+                       style="margin-top: 0px;" required="required"/>
+            </div>
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md- control-label" for=""></label>
+                <div class="col-md-4 col-md-offset-4">
+                    <button id="" type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>
