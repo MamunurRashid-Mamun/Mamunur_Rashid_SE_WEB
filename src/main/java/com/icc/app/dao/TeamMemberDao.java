@@ -11,4 +11,5 @@ public interface TeamMemberDao {
     void deleteTeamMember(TeamMember teamMember);
     List<TeamMember> getAllTeamMember();
     TeamMember getTeamMemberById(Long teamMemberId);
+    List<TeamMember> findByCountry(Country country);
 }

@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </head>
 <body>
 
@@ -26,11 +25,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="text-left" th:each="country,iterator : ${countries}">
+                <tr id="tableRow" class="text-left" th:each="country,iterator : ${countries}">
                     <td th:hidden="${country.countryId}" th:name="countryId"></td>
                     <!--<td th:text="${iterator.index+1}"></td>-->
                     <td th:text="${(iterator.index + 1)}" th:value="${(iterator.index + 1)}"></td>
-                    <td th:text="${country.countryName}" th:name="countryName" th:value="${country.countryName}"></td>
+                    <td><a th:text="${country.countryName}" th:name="countryName" th:value="${country.countryId}" th:onclick="'getTeamMembers('+ ${country.countryId} +')'"></a></td>
                     <td class="text-center">
                         <a th:href="@{/updateCountry(countryId=${country.countryId})}">
                             <button id="editButton" class="glyphicon glyphicon-pencil"></button>
@@ -47,9 +46,53 @@
             </table>
         </div>
         <div id="teamDiv" style="border: 1px solid black" class="col-md-8">
+            <h3 id="countryHeader"></h3>
+            <table class="table table-bordered table-hover" style="background-color: lightgoldenrodyellow;" id = "teamTable">
+                <thead>
+                <tr>
+                    <th>Sl No</th>
+                    <th>Name</th>
+                    <th>Date Of Birth</th>
+                    <th>Age</th>
+                    <th>Role</th>
+                </tr>
+                </thead>
+                <tbody>
 
+                </tbody>
+            </table>
         </div>
     </div>
+
+    <script type="text/javascript" >
+        function getTeamMembers(countryId) {
+            $.ajax({
+                type: "GET",
+                url: window.location + "teamMembers?countryId="+countryId,
+                success: function (result) {
+                    $('#teamTable tbody').empty();
+                    $.each(result, function (index, teamMember) {
+
+                        var teamMemberRow = '<tr>' +
+                            '<td>' + (index+1) + '</td>' +
+                            '<td>' + teamMember.name + '</td>' +
+                            '<td>' + teamMember.dateOfBirth + '</td>' +
+                            '<td>' + teamMember.age + '</td>' +
+                            '<td>' + teamMember.role + '</td>' +
+                            '</tr>';
+
+                        $('#teamTable tbody').append(teamMemberRow);
+
+                    });
+                },
+                error: function (e) {
+                    alert("ERROR: ", e);
+                    console.log("ERROR: ", e);
+                }
+            });
+        }
+    </script>
 </div>
+
 </body>
 </html>

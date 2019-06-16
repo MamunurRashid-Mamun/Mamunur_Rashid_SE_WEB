@@ -11,7 +11,7 @@ public class TeamMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long teamMemberId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
     @JoinColumn(name = "countryId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Country country;

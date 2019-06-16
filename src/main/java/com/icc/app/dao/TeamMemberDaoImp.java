@@ -1,5 +1,6 @@
 package com.icc.app.dao;
 
+import com.icc.app.dto.Country;
 import com.icc.app.dto.TeamMember;
 import com.icc.app.repositories.TeamMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,10 @@ public class TeamMemberDaoImp implements TeamMemberDao{
     @Override
     public TeamMember getTeamMemberById(Long teamMemberId) {
         return teamMemberRepository.findByTeamMemberId(teamMemberId);
+    }
+
+    @Override
+    public List<TeamMember> findByCountry(Country country) {
+        return teamMemberRepository.findByCountry(country);
     }
 }
