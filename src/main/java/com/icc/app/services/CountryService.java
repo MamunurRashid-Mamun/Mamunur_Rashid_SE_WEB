@@ -28,4 +28,8 @@ public class CountryService {
     public void deleteCountry(Country country) {
         countryDaoImp.deleteCountry(country);
     }
+
+    public Country getCountryById(Long countryId) {
+        return countryDaoImp.getCountryById(countryId);
+    }
 }

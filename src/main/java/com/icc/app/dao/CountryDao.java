@@ -3,10 +3,12 @@ package com.icc.app.dao;
 import com.icc.app.dto.Country;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CountryDao {
-    public void saveCountry(Country country);
-    public void updateCountry(Country country);
-    public void deleteCountry(Country country);
-    public List<Country> getAllCountry();
+    void saveCountry(Country country);
+    void updateCountry(Country country);
+    void deleteCountry(Country country);
+    List<Country> getAllCountry();
+    Country getCountryById(Long countryId);
 }

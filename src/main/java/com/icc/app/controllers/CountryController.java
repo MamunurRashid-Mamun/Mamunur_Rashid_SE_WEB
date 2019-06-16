@@ -38,4 +38,23 @@ public class CountryController {
         modelAndView.setViewName("home");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/updateCountry", method = RequestMethod.GET)
+    public ModelAndView showUpdateCountryPage(@ModelAttribute("countryId") Long countryId) {
+        ModelAndView modelAndView = new ModelAndView();
+        Country country = countryService.getCountryById(countryId);
+        modelAndView.addObject("country",country);
+        modelAndView.setViewName("updateCountry");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/updateCountry", method = RequestMethod.POST)
+    public ModelAndView updateCountry(@ModelAttribute Country country) {
+        ModelAndView modelAndView = new ModelAndView();
+        Country tempCountry = countryService.getCountryById(country.getCountryId());
+        tempCountry.setCountryName(country.getCountryName());
+        countryService.updateCountry(tempCountry);
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
+    }
 }
