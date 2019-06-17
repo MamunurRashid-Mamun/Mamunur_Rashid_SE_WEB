@@ -48,19 +48,19 @@
         <div id="teamDiv" style="border: 1px solid black" class="col-md-8">
             <h4 id="countryHeader">Click on country name to see Team Members</h4>
             <table class="table table-bordered table-hover" style="background-color: lightgoldenrodyellow;" id = "teamTable">
-                <thead>
-                <tr>
-                    <th>Sl No</th>
-                    <th>Name</th>
-                    <th>Date Of Birth</th>
-                    <th>Age</th>
-                    <th>Role</th>
-                    <th colspan="2"></th>
-                </tr>
-                </thead>
-                <tbody>
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>Sl No</th>-->
+                    <!--<th>Name</th>-->
+                    <!--<th>Date Of Birth</th>-->
+                    <!--<th>Age</th>-->
+                    <!--<th>Role</th>-->
+                    <!--<th colspan="2"></th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
 
-                </tbody>
+                <!--</tbody>-->
             </table>
         </div>
     </div>
@@ -71,9 +71,23 @@
                 type: "GET",
                 url: window.location + "teamMembers?countryId="+countryId,
                 success: function (result) {
-                    $('#teamTable tbody').empty();
+                    $('#teamTable').empty();
+                    var teamTableHead = '<thead>\n' +
+                        '                <tr>\n' +
+                        '                    <th>Sl No</th>\n' +
+                        '                    <th>Name</th>\n' +
+                        '                    <th>Date Of Birth</th>\n' +
+                        '                    <th>Age</th>\n' +
+                        '                    <th>Role</th>\n' +
+                        '                    <th colspan="2"></th>\n' +
+                        '                </tr>\n' +
+                        '                </thead>'+
+                        '                <tbody>' +
+                        '                </tbody>';
+                    $('#teamTable').append(teamTableHead);
                     $.each(result, function (index, teamMember) {
-
+                        $('#countryHeader').empty();
+                        $('#countryHeader').append(teamMember.country.countryName);
                         var teamMemberRow = '<tr>' +
                             '<td>' + (index+1) + '</td>' +
                             '<td>' + teamMember.name + '</td>' +
