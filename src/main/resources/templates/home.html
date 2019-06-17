@@ -46,7 +46,7 @@
             </table>
         </div>
         <div id="teamDiv" style="border: 1px solid black" class="col-md-8">
-            <h3 id="countryHeader"></h3>
+            <h4 id="countryHeader">Click on country name to see Team Members</h4>
             <table class="table table-bordered table-hover" style="background-color: lightgoldenrodyellow;" id = "teamTable">
                 <thead>
                 <tr>
@@ -80,6 +80,9 @@
                             '<td>' + teamMember.dateOfBirth + '</td>' +
                             '<td>' + teamMember.age + '</td>' +
                             '<td>' + teamMember.role + '</td>' +
+                            '<td><a onclick="editMember('+teamMember.teamMemberId+')">'+
+                            '<button id="editButton" class="glyphicon glyphicon-pencil"></button>'+
+                            '</a></td>' +
                             '<td><a onclick="deleteTeamMember('+teamMember.teamMemberId+')">'+
                                     '<button id="deleteButton" class="glyphicon glyphicon-trash"></button>'+
                                  '</a></td>' +
@@ -109,6 +112,10 @@
                     console.log("ERROR: ", e);
                 }
             });
+        }
+
+        function  editMember(teamMemberId) {
+            window.location = window.location + "editTeamMember?teamMemberId="+teamMemberId;
         }
     </script>
 </div>

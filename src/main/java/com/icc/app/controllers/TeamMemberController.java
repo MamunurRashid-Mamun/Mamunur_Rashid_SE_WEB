@@ -38,8 +38,35 @@ public class TeamMemberController {
         ModelAndView modelAndView = new ModelAndView();
         Country country = countryService.getCountryById(Long.parseLong(countryId));
         teamMember.setCountry(country);
-//        System.out.println(teamMember);
         teamMemberService.saveTeamMember(teamMember);
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
+    }
+
+//    Showing team member editing page
+    @RequestMapping(value = "/editTeamMember", method = RequestMethod.GET)
+    public ModelAndView showEditTeamMemberPage(@ModelAttribute("teamMemberId") String teamMemberId) {
+        ModelAndView modelAndView = new ModelAndView();
+        TeamMember teamMember = teamMemberService.getTemMemberById(Long.parseLong(teamMemberId));
+        modelAndView.addObject("teamMember", teamMember);
+        List<Country> countries = countryService.getAllCountry();
+        modelAndView.addObject("countries",countries);
+        modelAndView.setViewName("editTeamMember");
+        return modelAndView;
+    }
+
+    //    Updating team member
+    @RequestMapping(value = "/editTeamMember", method = RequestMethod.POST)
+    public ModelAndView updateTeamMemberPage(@ModelAttribute TeamMember teamMember, @ModelAttribute("countryId") String countryId) {
+        Country country = countryService.getCountryById(Long.parseLong(countryId));
+        TeamMember tempTeamMember = teamMemberService.getTemMemberById(teamMember.getTeamMemberId());
+        tempTeamMember.setName(teamMember.getName());
+        tempTeamMember.setAge(teamMember.getAge());
+        tempTeamMember.setRole(teamMember.getRole());
+        tempTeamMember.setDateOfBirth(teamMember.getDateOfBirth());
+        tempTeamMember.setCountry(country);
+        teamMemberService.saveTeamMember(tempTeamMember);
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
