@@ -37,4 +37,12 @@ public class TeamMemberService {
     public List<TeamMember> findTeamMemberByCountry(Country country) {
         return teamMemberDaoImp.findByCountry(country);
     }
+
+    public void deleteTeamMemberById(Long teamMemberId){
+        teamMemberDaoImp.deleteTeamMemberById(teamMemberId);
+    }
+
+    public void deleteTeamMemberByCountry(Country country) {
+        teamMemberDaoImp.deleteTeamMemberByCountry(country);
+    }
 }

@@ -5,10 +5,7 @@ import com.icc.app.dto.TeamMember;
 import com.icc.app.services.CountryService;
 import com.icc.app.services.TeamMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,10 +16,20 @@ public class TeamMemberRestController {
     @Autowired
     CountryService countryService;
 
+//    Getting all team member by ajax call
     @GetMapping("/teamMembers")
     @ResponseBody
     public List<TeamMember> getTeamMembersByCountry(@ModelAttribute("countryId") String countryId){
         Country country = countryService.getCountryById(Long.parseLong(countryId));
         return teamMemberService.findTeamMemberByCountry(country);
+    }
+
+//    Deleting specific team member by ajax call
+    @DeleteMapping("/deleteTeamMember")
+    public long deleteTeamMember(@ModelAttribute("teamMemberId") String teamMemberId){
+        TeamMember teamMember = teamMemberService.getTemMemberById(Long.parseLong(teamMemberId));
+        long countryId = teamMember.getCountry().getCountryId();
+        teamMemberService.deleteTeamMember(teamMember);
+        return countryId;
     }
 }

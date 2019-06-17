@@ -28,6 +28,11 @@ public class TeamMemberDaoImp implements TeamMemberDao{
     }
 
     @Override
+    public void deleteTeamMemberById(Long teamMemberId) {
+        teamMemberRepository.deleteByTeamMemberId(teamMemberId);
+    }
+
+    @Override
     public List<TeamMember> getAllTeamMember() {
         return teamMemberRepository.findAll();
     }
@@ -40,5 +45,10 @@ public class TeamMemberDaoImp implements TeamMemberDao{
     @Override
     public List<TeamMember> findByCountry(Country country) {
         return teamMemberRepository.findByCountry(country);
+    }
+
+    @Override
+    public void deleteTeamMemberByCountry(Country country) {
+        teamMemberRepository.deleteByCountry(country);
     }
 }

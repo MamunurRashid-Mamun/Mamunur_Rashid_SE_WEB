@@ -12,4 +12,7 @@ import java.util.List;
 public interface TeamMemberRepository extends JpaRepository<TeamMember,Long> {
     TeamMember findByTeamMemberId(Long teamMemberId);
     List<TeamMember> findByCountry(Country country);
+    void deleteByTeamMemberId(Long teamMemberId);
+    @Transactional
+    void  deleteByCountry(Country country);
 }

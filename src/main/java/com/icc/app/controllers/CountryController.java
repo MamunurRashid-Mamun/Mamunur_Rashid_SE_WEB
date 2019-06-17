@@ -2,6 +2,7 @@ package com.icc.app.controllers;
 
 import com.icc.app.dto.Country;
 import com.icc.app.services.CountryService;
+import com.icc.app.services.TeamMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +18,8 @@ import java.util.List;
 public class CountryController {
     @Autowired
     CountryService countryService;
+    @Autowired
+    TeamMemberService teamMemberService;
 //  Pulling all county data from database and showing it in homepage
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView showCountryList() {
@@ -65,11 +68,12 @@ public class CountryController {
         return modelAndView;
     }
 
-//    Deleting country by country Id and then redirecting to homepage
+//    Deleting country by country Id and then redirecting to homepage. Also Deleting all the team member of that country.
     @RequestMapping(value = "/deleteCountry", method = RequestMethod.GET)
     public ModelAndView deleteCountry(@ModelAttribute("countryId") Long countryId) {
         ModelAndView modelAndView = new ModelAndView();
         Country country = countryService.getCountryById(countryId);
+        teamMemberService.deleteTeamMemberByCountry(country);
         countryService.deleteCountry(country);
         modelAndView.setViewName("redirect:/");
         return modelAndView;
